@@ -11,7 +11,7 @@ vector<int> dijkstra_shortest_path(const Graph &G, int source, vector<int> &prev
     distances[source] = 0;
     previous[source] = -1;
 
-    priority_queue<pair<int,int>> minHeap; //minHeap use to handle the smallest path
+    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> minHeap; //minHeap use to handle the smallest path
     minHeap.push({source, 0}); //make a pair between source and distance
     /* from the source to destination distance
                             source      0
@@ -28,7 +28,7 @@ vector<int> dijkstra_shortest_path(const Graph &G, int source, vector<int> &prev
             int v = e.dst;
             int weight = e.weight;
 
-            if (!visited[v] && distances[u] + weight < distances[v]){
+            if (!visited[v] && distances[u] + weight <= distances[v]){
                 distances[v] = distances[u] + weight;
                 previous[v] = u;
                 minHeap.push({v,distances[v]});
