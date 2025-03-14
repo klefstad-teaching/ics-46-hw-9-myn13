@@ -62,6 +62,15 @@ bool is_adjacent(const string &word1, const string &word2){
     // return false;
 }
 
+template<typename Container>
+bool findWord(const Container& list, const string & word){
+    for (const auto& w : list){
+        if (w == word)
+            return true;
+    }
+    return false;
+}
+
 vector<string> generate_word_ladder(const string &begin_word, const string &end_word, const set<string> &word_list){
     if (begin_word == end_word)
         return {};
@@ -88,16 +97,19 @@ vector<string> generate_word_ladder(const string &begin_word, const string &end_
         for (const string& word : word_list){
             string word_lower = word;
             transform(word_lower.begin(), word_lower.end(), word_lower.begin(), ::tolower);
+
             if (is_adjacent(last_word, word_lower)){
-                if (find(ladder.begin(), ladder.end(), word_lower) != ladder.end()) {
-                        continue;  // Skip this word to avoid a circular ladder
-                    }
-                if (visited.find(word_lower) == visited.end() ) {
+                if (findWord(ladder, word_lower))
+                    continue;
+
+                if (!findWord(visited,word_lower) ) {
                     visited.insert(word_lower);
                     std::vector<string> new_ladder = ladder;
                     new_ladder.push_back(word);
+
                     if (word_lower == end_word)
                         return new_ladder;
+
                 ladder_queue.push(new_ladder);
                 }
             }
