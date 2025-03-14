@@ -9,6 +9,14 @@ void error(string word1, string word2, string msg) {
     std::cerr << word1 << " and " << word2 << msg;
 }
 
+
+int min_of_three(int a, int b, int c){
+    int min = (a >= b) ? b : a; 
+    if ( min > c)
+        min = c;
+    return min;
+}
+
 bool edit_distance_within(const std::string &str1, const std::string &str2, int d) {
 /*given two strings with same length, calculate the total cost to transform string 1 to string 2
     delete letter first then add new letter at the same slot
@@ -28,15 +36,23 @@ bool edit_distance_within(const std::string &str1, const std::string &str2, int 
     for (int c = 0; c < l2; ++c)
         table[0][c] = c;
 
-    for (int r = 1; r <= l1; ++r)
+    for (int r = 1; r <= l1; ++r){
         for (int c = 1; c <= l2; ++c){
             //if two characters are the same, set to the previous square in diagonal
-            if (str1[r - 1] == str1[c - 1])
-                table[r][c] = table[r -1][c -1];
+            if (str1[r - 1] == str2[c - 1]){
+                table[r][c] = table[r - 1][c - 1];
+            }
             else
-                table[r][c] = std::min({ table[r-1][c-1], table[r][c - 1], table[r-1][c] }) + 1 ;
+                table[r][c] = min_of_three( table[r-1][c-1], table[r][c - 1], table[r-1][c] ) + 1 ;
+
+            // if (r==c && table[r][c] <= d) {
+            //     return true;
+            // }
+            std::cout << table[r][c];
         }
-    
+        std::cout << endl;
+    }
+    std::cout << table[l1][l2] << std::endl;
     return table[l1][l2] <= d ? true : false;
     // return false;
 }
