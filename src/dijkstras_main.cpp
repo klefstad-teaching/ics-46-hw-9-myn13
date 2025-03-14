@@ -1,10 +1,10 @@
 #include "dijkstras.h"
 
 int main(){
-    string filename = "small.txt";
+    string filename = "medium.txt";
     Graph G;
     file_to_graph(filename, G);
-    int destination = 5;
+    int destination = 4;
 
     vector<int> previous(G.numVertices, -1); 
     //declaration vector in C: vector<int> vec(numbers of elements, all initialized to)
