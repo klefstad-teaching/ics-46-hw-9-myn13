@@ -81,8 +81,8 @@ void print_path(const vector<int> & v, int total){
         /*taking a list of vertices v and their total cost, print the path and the total cost*/
         for (size_t i = 0; i < v.size(); ++i) 
             cout << v[i] << " ";
-        cout << endl;
     }
+    cout << endl;
     cout << "Total cost is " << total << endl;
 }
 
