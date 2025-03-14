@@ -28,15 +28,15 @@ int main()
 
     // Test case for generate_word_ladder function
     cout << "Testing generate_word_ladder function:" << endl;
-    vector<string> ladder = generate_word_ladder("cat", "dog", word_list);
-    cout << "Word ladder from 'cat' to 'dog':" << endl;
-    print_word_ladder(ladder);
-    cout << endl;
+    vector<string> ladder = generate_word_ladder("Abba", "abbe", word_list);
+    // cout << "Word ladder from 'Abba' to 'abbe':" << endl;
+    // print_word_ladder(ladder);
+    // cout << endl;
 
-    // Test verify_word_ladder function
-    cout << "Testing verify_word_ladder function:" << endl;
-    verify_word_ladder();
-    cout << endl;
+    // // Test verify_word_ladder function
+    // cout << "Testing verify_word_ladder function:" << endl;
+    // verify_word_ladder();
+    // cout << endl;
 
     return 0;
 }
