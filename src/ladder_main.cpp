@@ -20,16 +20,23 @@ int main()
     cout << endl;
 
     // Test case for load_words function
-    // set<string> word_list;
-    // cout << "Testing load_words function:" << endl;
-    // load_words(word_list, "words.txt");
-    // cout << "Number of words loaded: " << word_list.size() << endl;
-    // cout << endl;
+    set<string> word_list;
+    cout << "Testing load_words function:" << endl;
+    load_words(word_list, "words.txt");
+    cout << "Number of words loaded: " << word_list.size() << endl;
+    cout << endl;
 
-    // // Test case for generate_word_ladder function
-    // cout << "Testing generate_word_ladder function:" << endl;
-    // vector<string> ladder = generate_word_ladder("Abba", "abbe", word_list);
-    // cout << "Word ladder from 'Abba' to 'abbe':" << endl;
+    // Test case for generate_word_ladder function
+    cout << "Testing generate_word_ladder function:" << endl;
+    set<string> arr = {"poon", "plee", "same", 
+                    "poie", "plie", "poin", "plea"};
+    string start = "poon";
+    string target = "plea";
+    vector<string> ladder = generate_word_ladder(start, target, arr);
+    print_word_ladder(ladder);
+ 
+    // vector<string> ladder = generate_word_ladder("Aarhus", "Abbott", word_list);
+    // cout << "Word ladder from 'Aarhus' to 'Abbott':" << endl;
     // print_word_ladder(ladder);
     // cout << endl;
 
