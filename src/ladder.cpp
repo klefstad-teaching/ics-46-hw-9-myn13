@@ -63,35 +63,35 @@ bool is_adjacent(const string &word1, const string &word2){
 }
 
 vector<string> generate_word_ladder(const string &begin_word, const string &end_word, const set<string> &word_list){
-    if (begin_word == end_word)
-        return {};
-    
-    std::queue<vector<string>> ladder_queue; //store sequence of words
-    ladder_queue.push({begin_word});
+    // if (begin_word == end_word)
+    //     return {};
 
-    std::set<string> visited;
-    visited.insert(begin_word);
+    // std::queue<vector<string>> ladder_queue; //store sequence of words
+    // ladder_queue.push({begin_word});
 
-    while (!ladder_queue.empty()){
-        std::vector<string> ladder = ladder_queue.front();
-        ladder_queue.pop();
-        string last_word = ladder.back();
+    // std::set<string> visited;
+    // visited.insert(begin_word);
 
-        if (last_word == end_word) 
-            return ladder;
+    // while (!ladder_queue.empty()){
+    //     std::vector<string> ladder = ladder_queue.front();
+    //     ladder_queue.pop();
+    //     string last_word = ladder.back();
+
+    //     if (last_word == end_word) 
+    //         return ladder;
         
-        for (string word : word_list){
-            if (is_adjacent(last_word, word))
-                if (visited.find(word) == visited.end() ) {
-                    visited.insert(word);
-                    std::vector<string> new_ladder = ladder;
-                    new_ladder.push_back(word);
-                    if (word == end_word)
-                        return new_ladder;
-                    ladder_queue.push(new_ladder);
-            }
-        }
-    }
+    //     for (string word : word_list){
+    //         if (is_adjacent(last_word, word))
+    //             if (visited.find(word) == visited.end() ) {
+    //                 visited.insert(word);
+    //                 std::vector<string> new_ladder = ladder;
+    //                 new_ladder.push_back(word);
+    //                 if (word == end_word)
+    //                     return new_ladder;
+    //                 ladder_queue.push(new_ladder);
+    //         }
+    //     }
+    // }
     return {};
 }
 
@@ -125,8 +125,8 @@ void verify_word_ladder()
 {
     set<string> word_list;
     load_words(word_list, "words.txt");
-    my_assert(generate_word_ladder("Aarhus", "Abbott", word_list).size() == 5);
-    my_assert(generate_word_ladder("peg", "reno", word_list).size() == 3);
+    my_assert(generate_word_ladder("cat", "dog", word_list).size() == 4);
+    my_assert(generate_word_ladder("marty", "curls", word_list).size() == 6);
     my_assert(generate_word_ladder("code", "data", word_list).size() == 6);
     my_assert(generate_word_ladder("work", "play", word_list).size() == 6);
     my_assert(generate_word_ladder("sleep", "awake", word_list).size() == 8);
