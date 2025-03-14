@@ -98,10 +98,10 @@ vector<string> generate_word_ladder(const string &begin_word, const string &end_
             string word_lower = word;
             transform(word_lower.begin(), word_lower.end(), word_lower.begin(), ::tolower);
 
-            if (is_adjacent(last_word, word_lower)){
-                if (findWord(ladder, word_lower))
-                    continue;
-
+            if (findWord(ladder, word_lower))
+                continue;
+            
+            if (is_adjacent(last_word, word_lower)) {
                 if (!findWord(visited,word_lower) ) {
                     visited.insert(word_lower);
                     std::vector<string> new_ladder = ladder;
