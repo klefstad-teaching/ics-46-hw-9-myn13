@@ -20,12 +20,12 @@ int main()
     // cout << "dog and log: " << (is_adjacent("dog", "log") ? "adjacent" : "not adjacent") << endl;
     // cout << endl;
 
-    // // Test case for load_words function
-    // set<string> word_list;
-    // cout << "Testing load_words function:" << endl;
-    // load_words(word_list, "words.txt");
-    // cout << "Number of words loaded: " << word_list.size() << endl;
-    // cout << endl;
+    // Test case for load_words function
+    set<string> word_list;
+    cout << "Testing load_words function:" << endl;
+    load_words(word_list, "words.txt");
+    cout << "Number of words loaded: " << word_list.size() << endl;
+    cout << endl;
 
     // Test case for generate_word_ladder function
     // cout << "Testing generate_word_ladder function:" << endl;
@@ -36,18 +36,18 @@ int main()
     // vector<string> ladder = generate_word_ladder(start, target, arr);
     // print_word_ladder(ladder);
 
-    cout << "Testing generate_word_ladder function:" << endl;
-    set<string> arr1 = {"were"};
-    string start1 = "were";
-    string target1 = "were";
-    vector<string> ladder1 = generate_word_ladder(start1, target1, arr1);
-    print_word_ladder(ladder1);
-    cout << ladder1.size();
+    // cout << "Testing generate_word_ladder function:" << endl;
+    // set<string> arr1 = {"were"};
+    // string start1 = "were";
+    // string target1 = "were";
+    // vector<string> ladder1 = generate_word_ladder(start1, target1, arr1);
+    // print_word_ladder(ladder1);
+    // cout << ladder1.size();
  
-    // vector<string> ladder = generate_word_ladder("Aarhus", "Abbott", word_list);
-    // cout << "Word ladder from 'Aarhus' to 'Abbott':" << endl;
-    // print_word_ladder(ladder);
-    // cout << endl;
+    vector<string> ladder = generate_word_ladder("cap", "cow", word_list);
+    cout << "Word ladder from 'cap' to 'cow':" << endl;
+    print_word_ladder(ladder);
+    cout << endl;
 
     // // Test verify_word_ladder function
     // cout << "Testing verify_word_ladder function:" << endl;
