@@ -22,11 +22,9 @@ vector<int> dijkstra_shortest_path(const Graph &G, int source, vector<int> &prev
         int u = minHeap.top().second;
         int dist_u = minHeap.top().first;
         minHeap.pop();
-        if (visited[u]) 
+        if (visited[u] || dist_u > distances[u]) 
             continue;
         visited[u]= true;
-        if (dist_u > distances[u])
-            continue;
         for (const Edge& e: G[u]){
             int v = e.dst;
             int weight = e.weight;
