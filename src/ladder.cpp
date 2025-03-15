@@ -89,46 +89,30 @@ vector<string> generate_word_ladder(const string &begin_word, const string &end_
     std::unordered_set<string> visited;
     visited.insert(begin_lower);
 
-    int max_depth = word_list.size(); // Set a maximum depth to prevent infinite loops
-    int current_depth = 0;
-
-    while (!ladder_queue.empty()  && current_depth < max_depth ){
-        int level_size = ladder_queue.size();
-        
-        for (int i = 0; i < level_size; ++i) {
+    while (!ladder_queue.empty()){
             vector<string> ladder = ladder_queue.front();
             ladder_queue.pop();
             string last_word = ladder.back();
 
-            if (last_word == end_word)
-                return ladder;
-
             string last_word_lower = last_word;
             transform(last_word_lower.begin(), last_word_lower.end(), last_word_lower.begin(), ::tolower);
         
+            if (last_word == end_word)
+                return ladder;
+
             for (const string& word : word_list){
-                string word_lower = word;
-                transform(word_lower.begin(), word_lower.end(), word_lower.begin(), ::tolower);
-
-                if (findWord(ladder, word_lower))
-                    continue;
-
-                if (is_adjacent(last_word, word_lower)) {
-                    if (!findWord(visited,word_lower) ) {
-                        visited.insert(word_lower);
-                        std::vector<string> new_ladder = ladder;
-                        new_ladder.push_back(word);
-
-                        if (word_lower == end_word)
-                            return new_ladder;
-
-                    ladder_queue.push(new_ladder);
+                if (is_adjacent(last_word_lower, word)) {
+                    if (!findWord(visited,word) ) {
+                        if (visited.find(word) == visited.end()) {
+                            visited.insert(word);
+                            std::vector<std::string> new_ladder = ladder;
+                            new_ladder.push_back(word);
+                            ladder_queue.push(new_ladder);
+                        }
                     }
                 }
             }
         }
-        ++current_depth;
-    }
     return {};
 }
 
