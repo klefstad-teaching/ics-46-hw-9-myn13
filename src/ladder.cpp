@@ -32,6 +32,9 @@ bool edit_distance_within(const std::string &str1, const std::string &str2, int 
         return false;
     }
 
+    if (str1 == str2)
+        return true;
+
     vector<vector<int>> table(l1 + 1, vector<int>(l2 + 1, 0));
 
     for (int r = 0; r <= l1; ++r)
@@ -56,7 +59,7 @@ bool edit_distance_within(const std::string &str1, const std::string &str2, int 
         // std::cout << endl;
     }
     // std::cout << table[l1][l2] << std::endl;
-    return table[l1][l2] <= d ? true : false;
+    return table[l1][l2] <= d;
     // return false;
 }
 
@@ -101,7 +104,7 @@ vector<string> generate_word_ladder(const string &begin_word, const string &end_
                 return ladder;
 
             for (const string& word : word_list){
-                if (is_adjacent(last_word_lower, word)) {
+                if ((std::abs((int) word.size() - (int) last_word_lower.size()) <= 1) && is_adjacent(last_word_lower, word)) {
                     if (!findWord(visited,word) ) {
                         if (visited.find(word) == visited.end()) {
                             visited.insert(word);
