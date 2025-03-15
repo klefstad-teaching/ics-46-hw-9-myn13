@@ -64,8 +64,46 @@ bool edit_distance_within(const std::string &str1, const std::string &str2, int 
 }
 
 bool is_adjacent(const string &word1, const string &word2){
-    return edit_distance_within(word1, word2, 1 );
+    // return edit_distance_within(word1, word2, 1 );
     // return false;
+    if (std::abs((int)word1.size() - (int) word2.size()) > 1) {
+        return false;
+    }
+
+    if (word1.size() == word2.size()){
+         int diff_count = 0;
+        for (size_t i = 0; i < word1.size(); ++i) {
+            if (word1[i] != word2[i]) {
+                diff_count++;
+                if (diff_count > 1) {
+                    return false;
+                }
+            }
+        }
+        return diff_count == 1;
+    }
+
+    if (std::abs((int)word1.size() - (int) word2.size()) == 1){
+        const string&shorter =  (word1.size() < word2.size()) ? word1 : word2;
+        const std::string& longer = (word1.size() < word2.size()) ? word2 : word1;
+
+        size_t i = 0, j = 0;
+        size_t diff_count = 0;
+        while (i < shorter.size() && j < longer.size()) {
+            if (shorter[i] != longer[j]) {
+                diff_count++;
+                if (diff_count > 1) {
+                    return false;
+                }
+                j++; // Advance the longer string's index
+            } else {
+                i++;
+                j++;
+            }
+        }
+        return true;
+    }
+    return false;
 }
 
 template<typename Container>
@@ -93,29 +131,28 @@ vector<string> generate_word_ladder(const string &begin_word, const string &end_
     visited.insert(begin_lower);
 
     while (!ladder_queue.empty()){
-            vector<string> ladder = ladder_queue.front();
-            ladder_queue.pop();
-            string last_word = ladder.back();
+        vector<string> ladder = ladder_queue.front();
+        ladder_queue.pop();
+        string last_word = ladder.back();
 
-            string last_word_lower = last_word;
-            transform(last_word_lower.begin(), last_word_lower.end(), last_word_lower.begin(), ::tolower);
-        
-            if (last_word == end_word)
-                return ladder;
+        string last_word_lower = last_word;
+        transform(last_word_lower.begin(), last_word_lower.end(), last_word_lower.begin(), ::tolower);
+    
+        if (last_word == end_word)
+            return ladder;
 
-            for (const string& word : word_list){
-                if ((std::abs((int) word.size() - (int) last_word_lower.size()) <= 1) && is_adjacent(last_word_lower, word)) {
-                    if (!findWord(visited,word) ) {
-                        if (visited.find(word) == visited.end()) {
-                            visited.insert(word);
-                            std::vector<std::string> new_ladder = ladder;
-                            new_ladder.push_back(word);
-                            ladder_queue.push(new_ladder);
-                        }
+        for (const string& word : word_list){
+            if (is_adjacent(last_word_lower, word))
+                if (!findWord(visited,word) ) {
+                    if (visited.find(word) == visited.end()) {
+                        visited.insert(word);
+                        std::vector<std::string> new_ladder = ladder;
+                        new_ladder.push_back(word);
+                        ladder_queue.push(new_ladder);
                     }
                 }
-            }
         }
+    }
     return {};
 }
 
