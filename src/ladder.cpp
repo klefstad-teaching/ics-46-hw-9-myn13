@@ -5,6 +5,7 @@
 #include <queue>
 #include <stdexcept>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 void error(string word1, string word2, string msg) {
@@ -85,37 +86,48 @@ vector<string> generate_word_ladder(const string &begin_word, const string &end_
     std::queue<vector<string>> ladder_queue; //store sequence of words
     ladder_queue.push({begin_word});
 
-    std::set<string> visited;
+    std::unordered_set<string> visited;
     visited.insert(begin_lower);
 
-    while (!ladder_queue.empty()){
-        std::vector<string> ladder = ladder_queue.front();
-        ladder_queue.pop();
-        string last_word = ladder.back();
+    int max_depth = word_list.size(); // Set a maximum depth to prevent infinite loops
+    int current_depth = 0;
 
-        if (last_word == end_word) 
-            return ladder;
+    while (!ladder_queue.empty()  && current_depth < max_depth ){
+        int level_size = ladder_queue.size();
         
-        for (const string& word : word_list){
-            string word_lower = word;
-            transform(word_lower.begin(), word_lower.end(), word_lower.begin(), ::tolower);
+        for (int i = 0; i < level_size; ++i) {
+            vector<string> ladder = ladder_queue.front();
+            ladder_queue.pop();
+            string last_word = ladder.back();
 
-            if (findWord(ladder, word_lower))
-                continue;
+            if (last_word == end_word)
+                return ladder;
 
-            if (is_adjacent(last_word, word_lower)) {
-                if (!findWord(visited,word_lower) ) {
-                    visited.insert(word_lower);
-                    std::vector<string> new_ladder = ladder;
-                    new_ladder.push_back(word);
+            string last_word_lower = last_word;
+            transform(last_word_lower.begin(), last_word_lower.end(), last_word_lower.begin(), ::tolower);
+        
+            for (const string& word : word_list){
+                string word_lower = word;
+                transform(word_lower.begin(), word_lower.end(), word_lower.begin(), ::tolower);
 
-                    if (word_lower == end_word)
-                        return new_ladder;
+                if (findWord(ladder, word_lower))
+                    continue;
 
-                ladder_queue.push(new_ladder);
+                if (is_adjacent(last_word, word_lower)) {
+                    if (!findWord(visited,word_lower) ) {
+                        visited.insert(word_lower);
+                        std::vector<string> new_ladder = ladder;
+                        new_ladder.push_back(word);
+
+                        if (word_lower == end_word)
+                            return new_ladder;
+
+                    ladder_queue.push(new_ladder);
+                    }
                 }
             }
         }
+        ++current_depth;
     }
     return {};
 }
@@ -151,9 +163,9 @@ void verify_word_ladder()
     set<string> word_list;
     load_words(word_list, "words.txt");
     my_assert(generate_word_ladder("cat", "dog", word_list).size() == 4);
-    // my_assert(generate_word_ladder("marty", "curls", word_list).size() == 6);
-    // my_assert(generate_word_ladder("code", "data", word_list).size() == 6);
-    // my_assert(generate_word_ladder("work", "play", word_list).size() == 6);
-    // my_assert(generate_word_ladder("sleep", "awake", word_list).size() == 8);
-    // my_assert(generate_word_ladder("car", "cheat", word_list).size() == 4);
+    my_assert(generate_word_ladder("marty", "curls", word_list).size() == 6);
+    my_assert(generate_word_ladder("code", "data", word_list).size() == 6);
+    my_assert(generate_word_ladder("work", "play", word_list).size() == 6);
+    my_assert(generate_word_ladder("sleep", "awake", word_list).size() == 8);
+    my_assert(generate_word_ladder("car", "cheat", word_list).size() == 4);
 }
